@@ -1,11 +1,14 @@
 :root {
     --ua-blue: blue;
     --ua-yellow: yellow;
+
+    --jp-red: red;
 }
 
 .flag {
     width: 300px;
     overflow: hidden;
+    border: 1px solid black;
 }
 
 .ukraine {
@@ -22,4 +25,19 @@
     width: 100%;
     height: 50%;
     background-color: var(--ua-yellow);
+}
+
+.japan {
+    aspect-ratio: 3 / 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.japan .circle {
+    aspect-ratio: 1 / 1;
+    height: 60%;
+    border-radius: 100%;
+    background-color: var(--jp-red);
 }
