@@ -1,8 +1,23 @@
 :root {
-    --ua-blue: blue;
-    --ua-yellow: yellow;
+    --white: #ffffff;
 
-    --jp-red: red;
+    --ua-blue: #0056b9;
+    --ua-yellow: #ffd800;
+
+    --jp-red: #bc002d;
+
+    --cz-blue: #11467f;
+    --cz-red: #d7141b;
+
+    --is-blue: #02529c;
+    --is-red: #dc1e35;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
 
 .flag {
@@ -11,6 +26,7 @@
     border: 1px solid black;
 }
 
+/* Ukraine */
 .ukraine {
     aspect-ratio: 3 / 2;
 }
@@ -27,12 +43,14 @@
     background-color: var(--ua-yellow);
 }
 
+/* Japan */
 .japan {
     aspect-ratio: 3 / 2;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--white);
 }
 
 .japan .circle {
@@ -42,19 +60,20 @@
     background-color: var(--jp-red);
 }
 
+/* Icelandic */
 .icelandic {
     aspect-ratio: 25 / 18;
-    background-color: blue;
+    background-color: var(--is-blue);
 
     position: relative;
 }
 
 .line {
-    background-color: white;
+    background-color: var(--white);
 }
 
 .line div {
-    background-color: red;
+    background-color: var(--is-red);
 }
 
 .ver {
@@ -92,6 +111,7 @@
     z-index: 10;
 }
 
+/* Czech */
 .czech {
     aspect-ratio: 3 / 2;
     position: relative;
@@ -100,18 +120,19 @@
 .czech .white {
     width: 100%;
     height: 50%;
+    background-color: var(--white);
 }
 
 .czech .red {
     width: 100%;
     height: 50%;
-    background-color: red;
+    background-color: var(--cz-red);
 }
 
 .czech .blue {
     aspect-ratio: 1 / 1;
     width: 100%;
-    background-color: blue;
+    background-color: var(--cz-blue);
 
     position: absolute;
 
