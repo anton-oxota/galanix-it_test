@@ -1,0 +1,38 @@
+.img {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border: 5px solid grey;
+    border-radius: 50%;
+
+    object-fit: cover;
+    transition: 0.3s all;
+}
+
+.img:nth-child(4n + 1) {
+    border-color: red;
+}
+
+.img:hover {
+    border-color: yellow;
+    transform: rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+    .img:nth-child(2n + 1) {
+        border-color: red;
+    }
+
+    .img:hover {
+        border-color: yellow;
+    }
+}
+
+@media (max-width: 500px) {
+    .img:nth-child(1n + 1) {
+        border-color: red;
+    }
+
+    .img:hover {
+        border-color: yellow;
+    }
+}
