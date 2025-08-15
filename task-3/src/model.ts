@@ -8,22 +8,27 @@ export type Result = {
 };
 
 type State = {
+    searchCountry: string;
     searchResult: Result[] | null;
 };
 
 const state: State = {
+    searchCountry: "",
     searchResult: null,
 };
 
-async function getUniversitiesByCountry(country: string): Promise<Result[]> {
-    const response = await fetch(
-        `http://universities.hipolabs.com/search?country=${country}`
-    );
+async function getUniversitiesByCountry(country: string) {
+    state.searchCountry = country;
 
     try {
+        const response = await fetch(
+            `http://universities.hipolabs.com/search?country=${country}`
+        );
+
         if (!response.ok) throw new Error("Can not get universities");
-        return await response.json();
+        state.searchResult = await response.json();
     } catch (error) {
+        console.log(error);
         throw error;
     }
 }

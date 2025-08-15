@@ -1,10 +1,13 @@
 import type { Result } from "./model";
 
 class View {
-    private table = document.querySelector(
-        "#table-container table"
+    private tableContainer = document.querySelector(
+        "#table-container"
     ) as HTMLTableElement;
 
+    public form = document.querySelector("form") as HTMLFormElement;
+
+    // Create element functions
     private createTableHead() {
         return `
             <thead>
@@ -51,17 +54,38 @@ class View {
         return `<tbody>${element}</tbody>`;
     }
 
+    // Render functions
     public renderTable(data: Result[]) {
         // Clear prev table
-        this.table.innerHTML = "";
+        this.tableContainer.innerHTML = "";
 
         // Create Table
-        const tableElement = `${this.createTableHead()}${this.createTableBodyElement(
-            data
-        )}`;
+        const tableElement = `
+            <table>
+                ${this.createTableHead()}
+                ${this.createTableBodyElement(data)}
+            </table>
+        `;
 
         // Render
-        this.table.innerHTML = tableElement;
+        this.tableContainer.innerHTML = tableElement;
+    }
+
+    public renderLoading() {
+        this.tableContainer.innerHTML = "Loading...";
+    }
+
+    public renderError(errorText: string) {
+        this.tableContainer.innerHTML = errorText;
+    }
+
+    // Handlers
+    public addFormSubmitHandler(handler: Function) {
+        this.form?.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            handler();
+        });
     }
 }
 
