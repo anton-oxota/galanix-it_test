@@ -21,8 +21,6 @@ const state: State = {
 };
 
 async function getUniversitiesByCountry(country: string) {
-    state.searchCountry = country;
-
     try {
         const response = await fetch(
             `http://universities.hipolabs.com/search?country=${country}`
@@ -56,4 +54,32 @@ function removeUniversity(unirersityName: string) {
     state.myUniversities.splice(existingUniversityIndex, 1);
 }
 
-export { state, getUniversitiesByCountry, addUniversity, removeUniversity };
+function setLocalUniversities(data: University[]) {
+    localStorage.setItem("university", JSON.stringify(data));
+}
+
+function getLocalUniversities(): University[] | null {
+    const universities = localStorage.getItem("university");
+    if (!universities) return null;
+
+    return JSON.parse(universities);
+}
+
+function setLocalSearch(search: string) {
+    localStorage.setItem("search", search);
+}
+
+function getLocalSearch() {
+    return localStorage.getItem("search") || "";
+}
+
+export {
+    state,
+    getUniversitiesByCountry,
+    addUniversity,
+    removeUniversity,
+    setLocalSearch,
+    getLocalSearch,
+    setLocalUniversities,
+    getLocalUniversities,
+};

@@ -2,8 +2,12 @@ import "./style.css";
 
 import {
     addUniversity,
+    getLocalSearch,
+    getLocalUniversities,
     getUniversitiesByCountry,
     removeUniversity,
+    setLocalSearch,
+    setLocalUniversities,
     state,
     type University,
 } from "./model";
@@ -28,7 +32,17 @@ async function searchUniversitiesController() {
     // Get search input value
     const form = View.form;
     const search = form.search.value;
+    state.searchCountry = search;
+    console.log(state.searchCountry);
 
+    // Set local search
+    setLocalSearch(search);
+
+    // Fetch data
+    await fetchUniversitiesController(search);
+}
+
+async function fetchUniversitiesController(search: string) {
     try {
         // Get data
         View.renderLoading();
@@ -71,6 +85,9 @@ function myUniversitiesController(checkbox: HTMLInputElement) {
     if (checkbox.checked) {
         addUniversity(unirersityName);
 
+        // Update local universities
+        setLocalUniversities(state.myUniversities);
+
         // Update total universities
         View.renderTolalUniversities(myUniversities.length);
     }
@@ -78,6 +95,9 @@ function myUniversitiesController(checkbox: HTMLInputElement) {
     // Remove university
     if (!checkbox.checked) {
         removeUniversity(unirersityName);
+
+        // Update local universities
+        setLocalUniversities(state.myUniversities);
 
         // Update total universities
         View.renderTolalUniversities(myUniversities.length);
@@ -92,7 +112,17 @@ function myUniversitiesController(checkbox: HTMLInputElement) {
     console.log(state.myUniversities);
 }
 
+function pageInitController() {
+    // Get local data
+    state.searchCountry = getLocalSearch();
+    state.myUniversities = getLocalUniversities() || [];
+
+    View.renderMyUniversities(state.myUniversities);
+    fetchUniversitiesController(state.searchCountry);
+}
+
 function init() {
+    pageInitController();
     View.addFormSubmitHandler(searchUniversitiesController);
     View.addResetButtonHandler(resetController);
     View.addCheckboxHandler(myUniversitiesController);
