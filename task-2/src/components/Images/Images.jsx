@@ -17,17 +17,25 @@ function Images() {
 
     return (
         <>
+            {/* Images Container */}
             <div className={styles.images}>
                 {images.map((imgInfo) => (
                     <ImageItem key={imgInfo.alt} {...imgInfo} />
                 ))}
             </div>
 
-            <button onClick={handleResetImages}>Reset Images</button>
+            {/* Reset Images Button */}
+            <button className={styles.resetButton} onClick={handleResetImages}>
+                Reset Images
+            </button>
 
             <Popup ref={dialogRef} onClose={handleCloseImage}>
                 {selectedImage && (
-                    <img src={selectedImage.src} alt={selectedImage.alt} />
+                    <img
+                        className={styles.bigImage}
+                        src={selectedImage.src}
+                        alt={selectedImage.alt}
+                    />
                 )}
             </Popup>
         </>

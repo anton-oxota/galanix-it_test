@@ -1,5 +1,6 @@
 .dialog {
     animation: open 0.3s;
+    width: 80%;
 }
 
 .dialog::backdrop {

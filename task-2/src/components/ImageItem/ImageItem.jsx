@@ -10,14 +10,15 @@ function ImageItem({ src, alt, id }) {
 
     return (
         <div className={styles.imageItem}>
-            <img
-                tabIndex={1}
+            {/* Image Button */}
+            <button
+                className={styles.imageButton}
                 onClick={() => handleOpenImage(id)}
-                className={styles.img}
-                src={src}
-                alt={alt}
-            />
+            >
+                <img className={styles.img} src={src} alt={alt} />
+            </button>
 
+            {/* Delete Button */}
             <button
                 className={styles.deleteButton}
                 onClick={() => handleDeleteImage(id)}
