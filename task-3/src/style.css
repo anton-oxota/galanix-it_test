@@ -1,0 +1,33 @@
+table,
+td,
+tr,
+th {
+    border: 1px solid black;
+    border-spacing: 0;
+    font-size: 30px;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* Table */
+#table-container {
+    width: 100%;
+}
+
+table {
+    display: flex;
+    flex-direction: column;
+}
+
+table tr {
+    display: grid;
+    grid-template-columns: 50px 200px 300px 400px auto 100px 120px;
+}
+
+table .web-page {
+    display: flex;
+    flex-direction: column;
+}
