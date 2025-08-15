@@ -1,17 +1,15 @@
-import imgData from "./img-data";
-import ImageItem from "./components/ImageItem/ImageItem";
-import Time from "./components/Time/Time";
+import Images from "./components/Images/Images";
+import Info from "./components/Info/Info";
+import ImageContextProvider from "./context/image-context";
 
 function App() {
     return (
-        <>
-            <Time />
+        <ImageContextProvider>
             <div className="container">
-                {imgData.map((imgInfo) => (
-                    <ImageItem key={imgInfo.alt} {...imgInfo} />
-                ))}
+                <Info />
+                <Images />
             </div>
-        </>
+        </ImageContextProvider>
     );
 }
 
