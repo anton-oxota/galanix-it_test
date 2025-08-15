@@ -1,9 +1,17 @@
-import type { Result } from "./model";
+import type { University } from "./model";
 
 class View {
-    private tableContainer = document.querySelector(
-        "#table-container"
-    ) as HTMLTableElement;
+    private resultsContainer = document.getElementById(
+        "search-results"
+    ) as HTMLDivElement;
+
+    private myUniversitiesContainer = document.getElementById(
+        "my-uviresities"
+    ) as HTMLDivElement;
+
+    private totalUniversities = document.querySelector(
+        ".total-universities"
+    ) as HTMLDivElement;
 
     public form = document.querySelector("form") as HTMLFormElement;
     private resetButton = this.form.querySelector("button[type=button]");
@@ -25,19 +33,19 @@ class View {
         `;
     }
 
-    private createDomains(domains: Result["domains"]) {
+    private createDomains(domains: University["domains"]) {
         return domains.map((domain) => `<p>${domain}</p>`).join("");
     }
 
-    private createWebPages(webPages: Result["web_pages"]) {
+    private createWebPages(webPages: University["web_pages"]) {
         return webPages.map((link) => `<a href='${link}'>${link}</a>`).join("");
     }
 
-    private createTableBodyElement(data: Result[]) {
+    private createTableBodyElement(data: University[]) {
         const element = data
             .map(
                 (universityInfo, index) => `
-                    <tr>    
+                    <tr data-name="${universityInfo.name}">    
                         <td>${index + 1}</td>
                         <td>${universityInfo.name}</td>
                         <td>${this.createDomains(universityInfo.domains)}</td>
@@ -47,6 +55,9 @@ class View {
                         <td>${universityInfo.country}</td>
                         <td>${universityInfo.alpha_two_code}</td>
                         <td>${universityInfo["state-province"]}</td>
+                        <td><input type="checkbox" ${
+                            universityInfo.isChecked ? "checked" : ""
+                        }/></td>
                     </tr>      
                 `
             )
@@ -55,29 +66,36 @@ class View {
         return `<tbody>${element}</tbody>`;
     }
 
-    // Render functions
-    public renderTable(data: Result[]) {
-        // Clear prev table
-        this.tableContainer.innerHTML = "";
-
-        // Create Table
-        const tableElement = `
+    private createTableElement(data: University[]) {
+        return `
             <table>
                 ${this.createTableHead()}
                 ${this.createTableBodyElement(data)}
             </table>
         `;
+    }
 
-        // Render
-        this.tableContainer.innerHTML = tableElement;
+    // Render functions
+    public renderResults(data: University[]) {
+        this.resultsContainer.innerHTML = this.createTableElement(data);
+    }
+
+    public renderMyUniversities(data: University[]) {
+        this.myUniversitiesContainer.innerHTML = data.length
+            ? this.createTableElement(data)
+            : "";
+    }
+
+    public renderTolalUniversities(number: number) {
+        this.totalUniversities.textContent = `Total: ${number}`;
     }
 
     public renderLoading() {
-        this.tableContainer.innerHTML = "Loading...";
+        this.resultsContainer.innerHTML = "Loading...";
     }
 
     public renderError(errorText: string) {
-        this.tableContainer.innerHTML = errorText;
+        this.resultsContainer.innerHTML = errorText;
     }
 
     // Handlers
@@ -94,10 +112,21 @@ class View {
             console.log("reset");
             this.form.reset();
 
-            this.tableContainer.innerHTML =
+            this.resultsContainer.innerHTML =
                 "<p>Start search universities by country</p>";
 
             handler();
+        });
+    }
+
+    public addCheckboxHandler(handler: Function) {
+        document.addEventListener("click", (event) => {
+            const target = event.target as Element;
+            const checkbox = target.closest('input[type="checkbox"]');
+
+            if (!checkbox) return;
+
+            handler(checkbox as HTMLInputElement);
         });
     }
 }

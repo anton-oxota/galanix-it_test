@@ -4,7 +4,7 @@ tr,
 th {
     border: 1px solid black;
     border-spacing: 0;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .container {
@@ -13,7 +13,7 @@ th {
 }
 
 /* Table */
-#table-container {
+#search-results {
     width: 100%;
     margin-top: 20px;
 }
@@ -25,7 +25,7 @@ table {
 
 table tr {
     display: grid;
-    grid-template-columns: 50px 200px 300px 400px auto 100px 120px;
+    grid-template-columns: 50px 200px 300px 400px 150px 100px 120px auto;
 }
 
 table .web-page {

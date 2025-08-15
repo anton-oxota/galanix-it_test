@@ -1,7 +1,28 @@
 import "./style.css";
 
-import { getUniversitiesByCountry, state } from "./model";
+import {
+    addUniversity,
+    getUniversitiesByCountry,
+    removeUniversity,
+    state,
+    type University,
+} from "./model";
 import View from "./view.ts";
+
+function renderResultsController(data: University[]) {
+    const { myUniversities } = state;
+
+    const updatedUniversityData = data.map((university) => {
+        return {
+            ...university,
+            isChecked: myUniversities.some(
+                (myUniversity) => myUniversity.name === university.name
+            ),
+        };
+    });
+
+    View.renderResults(updatedUniversityData);
+}
 
 async function searchUniversitiesController() {
     // Get search input value
@@ -24,7 +45,7 @@ async function searchUniversitiesController() {
         }
 
         // Render table
-        if (searchResult.length) View.renderTable(searchResult);
+        if (searchResult.length) renderResultsController(searchResult);
     } catch (error) {
         // Render error
         if (error instanceof Error) {
@@ -38,9 +59,43 @@ function resetController() {
     state.searchResult = null;
 }
 
+function myUniversitiesController(checkbox: HTMLInputElement) {
+    const { myUniversities, searchResult } = state;
+
+    // Get university name
+    const row = checkbox.closest("tr[data-name]") as HTMLTableRowElement | null;
+    const unirersityName = row?.dataset?.name;
+    if (!unirersityName) return;
+
+    // Add university
+    if (checkbox.checked) {
+        addUniversity(unirersityName);
+
+        // Update total universities
+        View.renderTolalUniversities(myUniversities.length);
+    }
+
+    // Remove university
+    if (!checkbox.checked) {
+        removeUniversity(unirersityName);
+
+        // Update total universities
+        View.renderTolalUniversities(myUniversities.length);
+
+        // Update results
+        if (searchResult) renderResultsController(searchResult);
+    }
+
+    // Render my universities
+    View.renderMyUniversities(myUniversities);
+
+    console.log(state.myUniversities);
+}
+
 function init() {
     View.addFormSubmitHandler(searchUniversitiesController);
     View.addResetButtonHandler(resetController);
+    View.addCheckboxHandler(myUniversitiesController);
 }
 
 init();
