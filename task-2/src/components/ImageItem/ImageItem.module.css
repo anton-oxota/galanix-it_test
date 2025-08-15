@@ -8,7 +8,7 @@
     transition: 0.3s all;
 }
 
-.img:nth-child(4n + 1) {
+.imageItem:nth-child(4n + 1) .img {
     border-color: red;
 }
 
@@ -17,8 +17,32 @@
     transform: rotate(-45deg);
 }
 
+/* Delete button */
+.deleteButton {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+
+    transition: 0.3s all;
+}
+
+.deleteButton:focus {
+    transform: scale(1.1);
+}
+
+.deleteButton:hover {
+    transform: scale(1.1);
+}
+
+.deleteButton img {
+    width: 20px;
+}
+
 @media (max-width: 900px) {
-    .img:nth-child(2n + 1) {
+    .imageItem:nth-child(2n + 1) .img {
         border-color: red;
     }
 
@@ -28,7 +52,7 @@
 }
 
 @media (max-width: 500px) {
-    .img:nth-child(1n + 1) {
+    .imageItem:nth-child(n) .img {
         border-color: red;
     }
 

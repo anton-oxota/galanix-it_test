@@ -8,7 +8,8 @@ import Popup from "../Popup/Popup";
 
 function Images() {
     const dialogRef = useRef(null);
-    const { images, selectedImage, handleCloseImage } = use(ImageContext);
+    const { images, selectedImage, handleCloseImage, handleResetImages } =
+        use(ImageContext);
 
     if (selectedImage) {
         dialogRef.current.open();
@@ -21,6 +22,8 @@ function Images() {
                     <ImageItem key={imgInfo.alt} {...imgInfo} />
                 ))}
             </div>
+
+            <button onClick={handleResetImages}>Reset Images</button>
 
             <Popup ref={dialogRef} onClose={handleCloseImage}>
                 {selectedImage && (
