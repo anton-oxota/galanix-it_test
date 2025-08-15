@@ -1,0 +1,18 @@
+.dialog {
+    animation: open 0.3s;
+}
+
+.dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: open 0.3s;
+}
+
+@keyframes open {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

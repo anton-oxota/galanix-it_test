@@ -10,11 +10,8 @@ function getFormatedTime() {
     }).format(Date.now());
 }
 
-const test1 = getFormatedTime();
-console.log(test1);
-
 function Time() {
-    const [time, setTime] = useState(test1);
+    const [time, setTime] = useState(getFormatedTime);
 
     useEffect(() => {
         const intervalId = setInterval(() => {

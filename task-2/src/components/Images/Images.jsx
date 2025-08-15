@@ -1,18 +1,33 @@
 import styles from "./Images.module.css";
 
-import ImageItem from "../ImageItem/ImageItem";
+import { use, useRef } from "react";
 import { ImageContext } from "../../context/image-context";
-import { use } from "react";
+
+import ImageItem from "../ImageItem/ImageItem";
+import Popup from "../Popup/Popup";
 
 function Images() {
-    const { images } = use(ImageContext);
+    const dialogRef = useRef(null);
+    const { images, selectedImage, handleCloseImage } = use(ImageContext);
+
+    if (selectedImage) {
+        dialogRef.current.open();
+    }
 
     return (
-        <div className={styles.images}>
-            {images.map((imgInfo) => (
-                <ImageItem key={imgInfo.alt} {...imgInfo} />
-            ))}
-        </div>
+        <>
+            <div className={styles.images}>
+                {images.map((imgInfo) => (
+                    <ImageItem key={imgInfo.alt} {...imgInfo} />
+                ))}
+            </div>
+
+            <Popup ref={dialogRef} onClose={handleCloseImage}>
+                {selectedImage && (
+                    <img src={selectedImage.src} alt={selectedImage.alt} />
+                )}
+            </Popup>
+        </>
     );
 }
 
