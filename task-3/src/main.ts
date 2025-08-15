@@ -17,7 +17,7 @@ async function searchUniversitiesController() {
         if (!searchResult) return;
 
         // Check results
-        if (searchResult.length) {
+        if (!searchResult.length) {
             View.renderError(
                 `Sorry, can not find unirersities in ${state.searchCountry}`
             );
@@ -33,8 +33,14 @@ async function searchUniversitiesController() {
     }
 }
 
+function resetController() {
+    state.searchCountry = "";
+    state.searchResult = null;
+}
+
 function init() {
     View.addFormSubmitHandler(searchUniversitiesController);
+    View.addResetButtonHandler(resetController);
 }
 
 init();

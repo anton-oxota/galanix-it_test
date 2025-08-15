@@ -15,6 +15,7 @@ th {
 /* Table */
 #table-container {
     width: 100%;
+    margin-top: 20px;
 }
 
 table {

@@ -6,6 +6,7 @@ class View {
     ) as HTMLTableElement;
 
     public form = document.querySelector("form") as HTMLFormElement;
+    private resetButton = this.form.querySelector("button[type=button]");
 
     // Create element functions
     private createTableHead() {
@@ -83,6 +84,18 @@ class View {
     public addFormSubmitHandler(handler: Function) {
         this.form?.addEventListener("submit", (event) => {
             event.preventDefault();
+
+            handler();
+        });
+    }
+
+    public addResetButtonHandler(handler: Function) {
+        this.resetButton?.addEventListener("click", () => {
+            console.log("reset");
+            this.form.reset();
+
+            this.tableContainer.innerHTML =
+                "<p>Start search universities by country</p>";
 
             handler();
         });
